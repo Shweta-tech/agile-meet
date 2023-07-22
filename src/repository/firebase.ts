@@ -1,6 +1,6 @@
 import 'firebase/analytics';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
+import firebase from "firebase/app";
+import "firebase/firestore";
 import { Game } from '../types/game';
 import { Player } from '../types/player';
 const firebaseConfig = {
@@ -17,6 +17,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const gamesCollectionName = 'games';
 const playersCollectionName = 'players';
+const taskCollectionName = 'taskGame';
 const db = firebase.firestore();
 
 export const addGameToStore = async (gameId: string, data: any) => {
@@ -53,14 +54,38 @@ export const getPlayerFromStore = async (gameId: string, playerId: string): Prom
   }
   return player as Player;
 };
-
+export const getTaskFromFromStore = async (gameId: string, playerId: string): Promise<Player | undefined> => {
+  const db = firebase.firestore();
+  const response = db.collection(gamesCollectionName).doc(gameId).collection(playersCollectionName).doc(playerId);
+  const result = await response.get();
+  let player = undefined;
+  if (result.exists) {
+    player = result.data();
+  }
+  return player as Player;
+};
 export const streamData = (id: string) => {
   return db.collection(gamesCollectionName).doc(id);
 };
 export const streamPlayersFromStore = (id: string) => {
   return db.collection(gamesCollectionName).doc(id).collection(playersCollectionName);
 };
+export function updateTaskNameInFirebase(gameId: string, newTaskName: string) {
+  // Get a reference to the task name in the database
+  const gameDocumentRef = db.collection(gamesCollectionName).doc(gameId);
 
+  // Get the 'taskName' field for the specific game document
+  gameDocumentRef
+    .update({
+      taskName: newTaskName, // Replace this with the updated task name you want to set
+    })
+    .then(() => {
+    })
+    .catch((error) => {
+      console.error('Error updating task name:', error);
+    });
+
+}
 export const updateGameDataInStore = async (gameId: string, data: any): Promise<boolean> => {
   const db = firebase.firestore();
   await db.collection(gamesCollectionName).doc(gameId).update(data);
@@ -82,6 +107,8 @@ export const updatePlayerInStore = async (gameId: string, player: Player) => {
 
   return true;
 };
+
+
 
 export const removeGameFromStore = async (gameId: string) => {
   await db.collection(gamesCollectionName).doc(gameId).delete();
