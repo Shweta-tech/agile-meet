@@ -33,7 +33,7 @@ export const CardPicker: React.FC<CardPickerProps> = ({ game, players, currentPl
           <Grid container spacing={4} justify='center'>
             {cards.map((card: CardConfig, index) => (
               <Grid key={card.value} item xs>
-                <Slide in={true} direction={'right'} timeout={(1000 * index) / 2}>
+                <Slide in={true} direction={'right'} timeout={(500 * index) / 2}>
                   <Card
                     id={`card-${card.displayValue}`}
                     className='CardPicker'
@@ -48,23 +48,21 @@ export const CardPicker: React.FC<CardPickerProps> = ({ game, players, currentPl
                       {card.value >= 0 && (
                         <>
                           <Typography className='CardContentTop' variant='caption'>
+                            {card.value > 0 ? card.value * 0.5 + ' Day' : card.value }
+                          </Typography>
+                          <Typography className='CardContentMiddle' variant='h6'>
                             {card.displayValue}
                           </Typography>
-                          <Typography className='CardContentMiddle' variant='h4'>
-                            {card.displayValue}
-                          </Typography>
-                          <Typography className='CardContentBottom' variant='caption'>
-                            {card.displayValue}
-                          </Typography>
+                          
                         </>
                       )}
                       {card.value === -1 && (
-                        <Typography className='CardContentMiddle' variant='h3'>
+                        <Typography className='CardContentMiddle' variant='h5'>
                           {randomEmoji}
                         </Typography>
                       )}
                       {card.value === -2 && (
-                        <Typography className='CardContentMiddle' variant='h3'>
+                        <Typography className='CardContentMiddle' variant='h5'>
                           ❓
                         </Typography>
                       )}
@@ -91,12 +89,12 @@ const getCardStyle = (players: Player[], playerId: string, card: CardConfig) => 
     return {
       marginTop: '-15px',
       zIndex: 5,
-      backgroundColor: card.color,
+      backgroundColor: '#bae6f7',
       border: '2px dashed black',
       boxShadow: '0 0px 12px 0 grey',
     };
   }
-  return { backgroundColor: card.color };
+  return { backgroundColor: '#bae6f7' };
 };
 
 const getPointerEvent = (game: Game) => {

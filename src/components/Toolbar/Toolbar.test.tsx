@@ -32,7 +32,7 @@ describe('Toolbar component', () => {
   });
   it('should render correct title', () => {
     render(<Toolbar />);
-    const title = screen.getByText('Planning Poker');
+    const title = screen.getByText('Agile Meet');
     expect(title).toBeInTheDocument();
   });
   it('should render Create new session button', () => {
@@ -59,14 +59,14 @@ describe('Toolbar component', () => {
   });
   it('should navigate to home page when Title is clicked clicked', () => {
     render(<Toolbar />);
-    const title = screen.getByText('Planning Poker');
+    const title = screen.getByText('Agile Meet');
     userEvent.click(title);
     expect(mockHistoryPush).toBeCalledWith('/');
   });
-  it('should navigate to github page when Github icon is clicked clicked', () => {
-    const view = render(<Toolbar />);
-    const title = view.container.querySelector('#github-button') as HTMLElement;
-    userEvent.click(title);
-    expect(window.location.href).toEqual('https://github.com/hellomuthu23/planning-poker');
-  });
+  // it('should navigate to github page when Github icon is clicked clicked', () => {
+  //   const view = render(<Toolbar />);
+  //   const title = view.container.querySelector('#github-button') as HTMLElement;
+  //   userEvent.click(title);
+  //   expect(window.location.href).toEqual('https://github.com/hellomuthu23/planning-poker');
+  // });
 });

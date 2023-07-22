@@ -13,21 +13,21 @@ export const Footer = () => {
             <div className='FooterItemContainer'>
               <CopyrightIcon color='secondary' fontSize='small' />
               <Typography color='textSecondary' variant='body2'>
-                hellomuthu23
+                Shweta Panwar
               </Typography>
             </div>
 
             <Divider orientation='vertical' flexItem></Divider>
             <div className='FooterItemContainer'>
               <Typography color='textSecondary' variant='body2'>
-                Feedback: hellomuthu23@gmail.com
+                Feedback: shwetapanwar97@gmail.com
               </Typography>
             </div>
 
-            <Divider orientation='vertical' flexItem></Divider>
+            {/* <Divider orientation='vertical' flexItem></Divider>
             <Link href='https://github.com/hellomuthu23/planning-poker/issues'>
               Submit an Issue
-            </Link>
+            </Link> */}
           </div>
         </div>
       </Slide>

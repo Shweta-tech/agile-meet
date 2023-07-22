@@ -14,6 +14,7 @@
 .HeaderLeftContainer {
   display: flex;
   cursor: pointer;
+  align-items: center;
 }
 
 .HeaderIcon {

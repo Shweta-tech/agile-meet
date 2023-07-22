@@ -24,7 +24,7 @@ export const GameController: React.FC<GameControllerProps> = ({ game, currentPla
   const [showCopiedMessage, setShowCopiedMessage] = useState(false);
   const copyInviteLink = () => {
     const dummy = document.createElement('input');
-    const url = `${window.location.origin}/join/${game.id}`;
+    const url = `${window.location.origin}/join/${game.name}`;
     document.body.appendChild(dummy);
     dummy.value = url;
     dummy.select();

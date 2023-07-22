@@ -23,7 +23,9 @@
   padding: 16px;
   height: 40px;
 }
-
+.MuiCardContent-root {
+  padding: 6px;
+}
 .RemoveButton{
   margin-top: -20px;
 }

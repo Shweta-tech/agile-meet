@@ -10,6 +10,7 @@ import {
   RadioGroup,
   TextField,
 } from '@material-ui/core';
+
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { uniqueNamesGenerator, Config, starWars, colors, animals } from 'unique-names-generator';
 import { useHistory } from 'react-router-dom';
@@ -28,14 +29,25 @@ const userNameConfig: Config = {
 
 export const CreateGame = () => {
   const history = useHistory();
-  const [gameName, setGameName] = useState(uniqueNamesGenerator(gameNameConfig));
-  const [createdBy, setCreatedBy] = useState(uniqueNamesGenerator(userNameConfig));
+  let [gameName, setGameName] = useState('');
+  let [createdBy, setCreatedBy] = useState('');
   const [gameType, setGameType] = useState(GameType.Fibonacci);
   const [hasDefaults, setHasDefaults] = useState({ game: true, name: true });
   const [loading, setLoading] = useState(false);
 
+
   const handleSubmit = async (event: FormEvent) => {
+
     event.preventDefault();
+    if(gameName == ''){
+      alert('Please enter Game name');
+      return;
+    }
+    else if(createdBy == ''
+    ){
+      alert('Please enter Player`s name');
+      return;
+    }
     setLoading(true);
     const game: NewGame = {
       name: gameName,
@@ -49,6 +61,7 @@ export const CreateGame = () => {
     }
     history.push(`/game/${newGameId}`);
   };
+ 
 
   const emptyGameName = () => {
     if (hasDefaults.game) {
@@ -57,6 +70,7 @@ export const CreateGame = () => {
       setHasDefaults(hasDefaults);
     }
   };
+
   const emptyCreatorName = () => {
     if (hasDefaults.name) {
       setCreatedBy('');
@@ -76,12 +90,14 @@ export const CreateGame = () => {
           />
           <CardContent className='CreateGameCardContent'>
             <TextField
+            required
               className='CreateGameTextField'
-              required
-              id='filled-required'
+              
+              id='filled-session-required'
               label='Session Name'
               placeholder='Enter a session name'
-              value={gameName || ''}
+             
+              value={gameName}
               onClick={() => emptyGameName()}
               variant='outlined'
               onChange={(event: ChangeEvent<HTMLInputElement>) => setGameName(event.target.value)}
@@ -89,10 +105,10 @@ export const CreateGame = () => {
             <TextField
               className='CreateGameTextField'
               required
-              id='filled-required'
+              id='filled-name-required'
               label='Your Name'
               placeholder='Enter your name'
-              value={createdBy || ''}
+              value={createdBy}
               onClick={() => emptyCreatorName()}
               variant='outlined'
               onChange={(event: ChangeEvent<HTMLInputElement>) => setCreatedBy(event.target.value)}
@@ -126,7 +142,7 @@ export const CreateGame = () => {
             </RadioGroup>
           </CardContent>
           <CardActions className='CreateGameCardAction'>
-            <Button type='submit' variant='contained' color='primary' className='CreateGameButton' data-testid="loading" disabled={loading}>
+            <Button type='submit' variant='contained' style={{ background: '#66b2b2' }} className='CreateGameButton' data-testid="loading"  disabled={loading}>
               Create
             </Button>
           </CardActions>

@@ -65,7 +65,7 @@ export const JoinGame = () => {
                 helperText={!gameFound && 'Session not found, check the ID'}
                 className='JoinGameTextField'
                 required
-                id='filled-required'
+                id='filled-session-required'
                 label='Session ID'
                 placeholder='xyz...'
                 defaultValue={joinGameId}
@@ -75,7 +75,7 @@ export const JoinGame = () => {
               <TextField
                 className='JoinGameTextField'
                 required
-                id='filled-required'
+                id='filled-name-required'
                 label='Your Name'
                 placeholder='Enter your name'
                 defaultValue={playerName}

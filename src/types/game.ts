@@ -10,6 +10,7 @@ export interface Game {
   createdById: string;
   createdAt: Date;
   updatedAt?: Date;
+  taskName?: string;
 }
 
 export interface NewGame {

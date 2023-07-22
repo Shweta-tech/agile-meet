@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, IconButton, Typography } from '@material-ui/core';
-import React from 'react';
+import React, {useEffect, useState } from 'react';
 import { Game, GameType } from '../../../types/game';
 import { Player } from '../../../types/player';
 import { Status } from '../../../types/status';
@@ -10,25 +10,70 @@ import { red } from '@material-ui/core/colors';
 import { removePlayer } from '../../../service/players';
 import { isModerator } from '../../../utils/isModerator';
 
+
 interface PlayerCardProps {
   game: Game;
   player: Player;
   currentPlayerId: string;
 }
-
+interface EmojiObj {
+  emoji: string;
+  side: 'top-left' | 'top-right';
+}
 export const PlayerCard: React.FC<PlayerCardProps> = ({ game, player, currentPlayerId }) => {
   const removeUser = (gameId: string, playerId: string) => {
     removePlayer(gameId, playerId);
   };
+  const [showPicker, setShowPicker] = useState(false);
+  const [emojis, setEmojis] = useState<EmojiObj[]>([]);
 
-  return (
+  const handleEmojiClick = (emoji: string, side: 'top-left' | 'top-right') => {
+    setEmojis([...emojis, { emoji, side }]);
+  };
+
+
+  
+  const  handleHover = (event: { pageX: number; pageY: number; }) => {
+    setShowPicker(true);
+
+} 
+
+const  leaveHover = (event: { pageX: number; pageY: number; }) => {
+  setShowPicker(false);
+
+} 
+return (
+    <div>
+        {emojis.map((emojiObj, index) => (
+      <div
+        key={index}
+        className={`emoji ${emojiObj.side}`}
+        onAnimationEnd={() => setEmojis(emojis.filter((_, i) => i !== index))}
+      >
+        {emojiObj.emoji}
+      </div>
+   ))}
+  
+   { showPicker && player.id != currentPlayerId &&
+  
+  
+    <div className="emoji-buttons" onMouseLeave={leaveHover}>
+      <button onClick={() => handleEmojiClick('💩', 'top-left')}>💩</button>
+      <button onClick={() => handleEmojiClick('🏹', 'top-right')}>🏹</button>
+      <button onClick={() => handleEmojiClick('👁️', 'top-left')}>👁️</button>
+    </div>
+      
+      }
+    
     <Card
       variant='outlined'
       className='PlayerCard'
+      onMouseEnter={handleHover} 
       style={{
-        backgroundColor: getCardColor(game, player.value),
+        backgroundColor: '#edf9fc',
       }}
     >
+     
       <CardHeader
         className='PlayerCardTitle'
         title={player.name}
@@ -45,25 +90,24 @@ export const PlayerCard: React.FC<PlayerCardProps> = ({ game, player, currentPla
             >
               <DeleteForeverIcon fontSize='small' style={{ color: red[300] }} />
             </IconButton>
+           
           )
         }
       />
+      
+      
       <CardContent className='PlayerCardContent'>
         <Typography variant='h2' className='PlayerCardContentMiddle'>
           {getCardValue(player, game)}
         </Typography>
       </CardContent>
+      
     </Card>
+    </div>
   );
 };
 
-const getCardColor = (game: Game, value: number | undefined): string => {
-  if (game.gameStatus !== Status.Finished) {
-    return 'var(--color-background-secondary)';
-  }
-  const card = getCards(game.gameType).find((card) => card.value === value);
-  return card ? card.color : 'var(--color-background-secondary)';
-};
+
 
 const getCardValue = (player: Player, game: Game) => {
   if (game.gameStatus !== Status.Finished) {

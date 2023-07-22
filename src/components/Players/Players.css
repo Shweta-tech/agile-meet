@@ -1,5 +1,6 @@
 .PlayersContainer {
-  padding: 20px;
+  /* padding-top: 100px; */
+  padding-left: 20px;
   display: flex;
   flex-direction: row;
   overflow: auto;
@@ -8,7 +9,7 @@
 }
 
 .Player {
-  padding: 20px;
+  padding-left: 20px;
   border: 1px solid var(--color-border);
   min-width: 150px;
   display: flex;
@@ -18,4 +19,47 @@
 
 h4 {
   text-align: center;
+}
+.emoji {
+  position: absolute;
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(0,V,1,V); /* Adjust timing function for the desired projectile motion effect */
+}
+
+.top-left {
+  z-index: 99;
+  animation-name: emoji-fall-top-left;
+
+}
+.emoji-buttons{
+  z-index: 99;
+  transform: translate(0px, 0px) rotate(0deg);
+}
+.top-right {
+  z-index: 99;
+  animation-name: emoji-fall-top-right;
+}
+
+
+
+@keyframes emoji-fall-top-left {
+  0% {
+    opacity: 0;
+    transform: translate(-1000px, 100px) rotate(0deg); /* Adjust the starting position */
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 110) rotate(360deg);
+  }
+}
+
+@keyframes emoji-fall-top-right {
+  0% {
+    opacity: 0;
+    transform: translate(-1000px, 200px) rotate(0deg); /* Adjust the starting position */
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-0, 110) rotate(360deg);
+  }
 }

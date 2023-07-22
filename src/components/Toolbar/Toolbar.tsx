@@ -1,15 +1,13 @@
-import { Button, Slide, useMediaQuery } from '@material-ui/core';
+import { Button, Slide, useMediaQuery,Box, withWidth } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import AppToolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import GamesIcon from '@material-ui/icons/Games';
-import GithubIcon from '@material-ui/icons/GitHub';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import MergeTypeOutlinedIcon from '@material-ui/icons/MergeTypeOutlined';
-import React from 'react';
 import { useHistory } from 'react-router-dom';
 import './Toolbar.css';
-export const title = 'Planning Poker';
+export const title = 'Agile Meet';
 
 export const Toolbar = () => {
   const history = useHistory();
@@ -24,7 +22,9 @@ export const Toolbar = () => {
               className='HeaderLeftContainer'
               onClick={() => history.push('/')}
             >
-              <GamesIcon className='HeaderIcon' />
+            <img  style={{width:40,height:40}}
+              src="./../../logo192.png"
+            ></img>
               <Typography variant={isSmallScreen? 'subtitle1':'h5'} color='inherit' noWrap>
                 {title}
               </Typography>
@@ -36,16 +36,7 @@ export const Toolbar = () => {
               <Button startIcon={<MergeTypeOutlinedIcon/>} size={ isSmallScreen ? "small" : "large"}  color='inherit' onClick={() => history.push('/join')}>
                 {!isSmallScreen ? 'Join Session' : null}
               </Button>
-              <Button
-                id='github-button'
-                color='inherit'
-                onClick={() =>
-                  (window.location.href =
-                    'https://github.com/hellomuthu23/planning-poker')
-                }
-              >
-                <GithubIcon></GithubIcon>
-              </Button>
+              
             </div>
           </div>
         </AppToolbar>
